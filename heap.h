@@ -2,14 +2,13 @@
 
 #include <vector>
 
-
 template <typename T>
 class Heap {
 public:
     Heap(T null) {
         m_size = 0;
         m_null = null;
-        m_heap.push_back(m_null)
+        m_heap.push_back(0)
     }
 
     ~Heap() {
@@ -29,7 +28,7 @@ public:
             item = m_free;
             m_free = m_free->next;
         } else {
-            item = new T();
+            item = new Item();
             item->itemIndex = m_item.size();
             m_item.push_back(item);
         }
@@ -49,7 +48,7 @@ public:
     }
 
     T Top() {
-        return m_size > 0 ? m_heap[1] : m_null;
+        return m_size > 0 ? m_heap[1]->data : m_null;
     }
 
     void Pop() {
@@ -71,11 +70,9 @@ public:
 
          if (m_size > 0) {
              m_heap[heapIndex] = m_heap[m_size + 1];
-             if (heapIndex > 1 && *m_heap[heapIndex] < m_heap[heapIndex / 2]) {
-                 HeapUp(index);
-             } else {
-                 HeapDown(index);
-             }
+             m_heap[heapIndex]->heapIndex = heapIndex;
+             HeapUp(m_heap[heapIndex]->itemIndex);
+             HeapDown(m_heap[heapIndex]->itemIndex);
          }
 
          item->data = m_null;
@@ -94,13 +91,13 @@ public:
             m_heap[heapIndex] = m_heap[i];
             m_heap[heapIndex]->heapIndex = heapIndex;
 	}
-        m_item[heapIndex] = m_heap[0];
-        m_item[heapIndex]->heapIndex = heapIndex;
+        m_heap[heapIndex] = m_heap[0];
+        m_heap[heapIndex]->heapIndex = heapIndex;
     }
 
     void HeapDown(int index) {
         int heapIndex = m_item[index]->heapIndex;
-        m_heap[0] = m_heap[index];
+        m_heap[0] = m_heap[heapIndex];
         for (int i = heapIndex * 2; i <= m_size; i = heapIndex * 2) {
             if (i + 1 <= m_size && *m_heap[i + 1] < *m_hea[i]) {
                 i += 1;
