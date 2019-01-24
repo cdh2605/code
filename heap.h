@@ -7,6 +7,7 @@ class Heap {
 public:
     Heap(T null) {
         m_size = 0;
+        m_free = 0;
         m_null = null;
         m_heap.push_back(0);
     }
@@ -22,7 +23,7 @@ public:
         m_item.clear();
     }
 
-    int Push(T& t) {
+    int Push(const T& t) {
         Item* item = 0;
         if (m_free) {
             item = m_free;
@@ -90,6 +91,7 @@ public:
             }
             m_heap[heapIndex] = m_heap[i];
             m_heap[heapIndex]->heapIndex = heapIndex;
+            heapIndex = i;
 	}
         m_heap[heapIndex] = m_heap[0];
         m_heap[heapIndex]->heapIndex = heapIndex;
@@ -107,6 +109,7 @@ public:
             }
             m_heap[heapIndex] = m_heap[i];
             m_heap[heapIndex]->heapIndex = heapIndex;
+            heapIndex = i;
         }
         m_heap[heapIndex] = m_heap[0];
         m_heap[heapIndex]->heapIndex = heapIndex;
@@ -118,6 +121,10 @@ public:
         }
 
         return m_item[index]->data;
+    }
+
+    bool Empty() {
+        return m_size <= 0;
     }
 
 private:
