@@ -124,7 +124,7 @@ public:
     }
 
     int Size() {
-        return m_size();
+        return m_size;
     }
 
     bool Empty() {
