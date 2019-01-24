@@ -8,7 +8,7 @@ public:
     Heap(T null) {
         m_size = 0;
         m_null = null;
-        m_heap.push_back(0)
+        m_heap.push_back(0);
     }
 
     ~Heap() {
@@ -99,7 +99,7 @@ public:
         int heapIndex = m_item[index]->heapIndex;
         m_heap[0] = m_heap[heapIndex];
         for (int i = heapIndex * 2; i <= m_size; i = heapIndex * 2) {
-            if (i + 1 <= m_size && *m_heap[i + 1] < *m_hea[i]) {
+            if (i + 1 <= m_size && *m_heap[i + 1] < *m_heap[i]) {
                 i += 1;
             }
             if (!(*m_heap[i] < *m_heap[0])) {
