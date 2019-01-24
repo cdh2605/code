@@ -123,6 +123,10 @@ public:
         return m_item[index]->data;
     }
 
+    int Size() {
+        return m_size();
+    }
+
     bool Empty() {
         return m_size <= 0;
     }
